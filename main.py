@@ -53,9 +53,6 @@ class Record:
         self.birthday = Birthday(birthday)
 
 
-# Логіка для визначення днів народження, які відбудуться протягом наступного тижня
-
-
 class AddressBook(UserDict):
     def add_record(self, record):
         # Переконайтеся, що record є екземпляром класу Record
