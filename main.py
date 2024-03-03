@@ -127,22 +127,30 @@ def add_contact(args, book):
 
 @input_error
 def change_contact(args, book):
-    name, phone = args
-    if name not in book:
-        raise KeyError
-    book[name] = phone
-    return "Contact updated."
+    name, old_phone, new_phone = args
+    record = book.find(name)
+    if record is None:
+        return "Contact not found."
+    else:
+        record.edit_phone(old_phone, new_phone)
+        return "Contact updated."
 
 
 @input_error
 def show_phone(args, book):
     name = args[0]
-    return book[name]
+    record = book.find(name)
+    if record is None:
+        return "Contact not found."
+    else:
+        return '; '.join([phone.value for phone in record.phones])
 
 
 @input_error
 def show_all(book, *args):
-    return "\n".join([f"{name}: {number}" for name, number in book.items()])
+    if not book.data:
+        return "No contacts found."
+    return "\n".join([f"{name}: {', '.join(phone.value for phone in record.phones)}" for name, record in book.items()])
 
 
 @input_error
